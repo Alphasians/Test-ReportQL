@@ -46,8 +46,10 @@ runs:
       echo "Done"
       ${GITHUB_ACTION_PATH}/install.sh > ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
       echo "Fuck"
+      cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
       grep -w "TESTRUN SUMMARY. For testrun with id: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt > ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
       echo "Shit1"
+      cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
       grep -w "	Total tests: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
       echo "Shit2"
       grep -w "	Total test passed: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
