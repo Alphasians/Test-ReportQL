@@ -51,6 +51,7 @@ runs:
       COMMAND : ${{ inputs.command }}
       KEPLOY_PATH: ${{inputs.keploy-path}}
   - name: TestReport
+    needs: keploy-test-report
     run: |
       cat ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
       grep -w "TESTRUN SUMMARY. For testrun with id: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt > ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
