@@ -42,7 +42,7 @@ runs:
   - id: keploy-test-report
     name: Run Script
     run:  |
-      ${GITHUB_ACTION_PATH}/install.sh}
+      ${GITHUB_ACTION_PATH}/install.sh
     shell: bash
     env:
       WORKDIR: ${{ inputs.working-directory }}
@@ -58,4 +58,3 @@ runs:
   - name: echo TestReport Generated
     shell: bash
     run: ${{steps.test.outputs.stdout}}
-
