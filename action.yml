@@ -21,9 +21,12 @@ inputs:
     required: true
     default: ./
 outputs:
-  output_file_name:
-    description: "command line output file"
-    value: ${{ steps.file.outputs.output_file_name }}
+  test-report:
+    description: Keploy Test report
+  success:
+    description: Count of passed tests
+  failed:
+    description: Count of failed tests
 
 runs:
   using: "composite"
@@ -40,16 +43,20 @@ runs:
     name: Run Script
     run:  |
       ${GITHUB_ACTION_PATH}/install.sh
-      cat ${GITHUB_ACTION_PATH}/install.sh > ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
+      cat ${GITHUB_ACTION_PATH}/install.sh >> ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
     shell: bash
     env:
       WORKDIR: ${{ inputs.working-directory }}
       DELAY: ${{ inputs.delay }}
       COMMAND : ${{ inputs.command }}
       KEPLOY_PATH: ${{inputs.keploy-path}}
-  - id: file
-    run: |
-      echo "::set-output name=output_file_name::${GITHUB_WORKSPACE}/${WORKDIR}/report.txt"
-      echo "output_file_name=${{ inputs.output_file_name }}"
-      cat ${{output_file_name}} >> $GITHUB_OUTPUT
-    shell: bash
+  - name: TestReport
+    id: test
+    with:
+      run: |
+      cat ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
+      grep -w "TESTRUN SUMMARY. For testrun with id: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt > ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      grep -w "	Total tests: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      grep -w "	Total test passed: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      grep -w "	Total test failed: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
