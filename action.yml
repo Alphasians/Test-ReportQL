@@ -49,6 +49,25 @@ runs:
       grep "Total test failed: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
       set -x
       cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      echo "${GITHUB_WORKSPACE}/${WORKDIR}/final.txt" >> $GITHUB_ENV
+      echo "Env Set"
+    shell: bash
+    env:
+      WORKDIR: ${{ inputs.working-directory }}
+      DELAY: ${{ inputs.delay }}
+      COMMAND : ${{ inputs.command }}
+      KEPLOY_PATH: ${{inputs.keploy-path}}
+  - id: keploy-test-report
+    name: Run Script
+    run:  |
+      ${GITHUB_ACTION_PATH}/install.sh > ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
+      grep "TESTRUN SUMMARY. For testrun with id: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt > ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      grep "Total tests: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      grep "Total test passed: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      grep "Total test failed: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      echo 'KEPLOY_TESTREPORT<<EOF' >> $GITHUB_ENV     
+      cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt >> $GITHUB_ENV
+      echo 'EOF' >> $GITHUB_ENV
     shell: bash
     env:
       WORKDIR: ${{ inputs.working-directory }}
