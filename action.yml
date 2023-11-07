@@ -44,15 +44,6 @@ runs:
     run:  |
       ${GITHUB_ACTION_PATH}/install.sh
       cat ${GITHUB_ACTION_PATH}/install.sh >> ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
-    shell: bash
-    env:
-      WORKDIR: ${{ inputs.working-directory }}
-      DELAY: ${{ inputs.delay }}
-      COMMAND : ${{ inputs.command }}
-      KEPLOY_PATH: ${{inputs.keploy-path}}
-  - name: TestReport
-    needs: keploy-test-report
-    run: |
       cat ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
       grep -w "TESTRUN SUMMARY. For testrun with id: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt > ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
       grep -w "	Total tests: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
@@ -60,3 +51,8 @@ runs:
       grep -w "	Total test failed: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
       cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
     shell: bash
+    env:
+      WORKDIR: ${{ inputs.working-directory }}
+      DELAY: ${{ inputs.delay }}
+      COMMAND : ${{ inputs.command }}
+      KEPLOY_PATH: ${{inputs.keploy-path}}
