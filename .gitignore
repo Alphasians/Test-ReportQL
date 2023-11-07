@@ -9,4 +9,6 @@
 
       cd ${GITHUB_WORKSPACE}/${WORKDIR}/keploy
       echo "$(find . -type d -name 'test-set-*' | wc -l)" > ${GITHUB_WORKSPACE}/${WORKDIR}/testSets.yml
-      
+demo.sh
+final.txt
+report.txt

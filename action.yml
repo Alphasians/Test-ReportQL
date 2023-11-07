@@ -43,20 +43,11 @@ runs:
     name: Run Script
     run:  |
       ${GITHUB_ACTION_PATH}/install.sh
-      echo "Done"
       ${GITHUB_ACTION_PATH}/install.sh > ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
-      echo "Fuck"
       grep -w "TESTRUN SUMMARY. For testrun with id: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt > ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
-      echo "Shit1"
-      cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
-      grep -w "	Total tests: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
-      echo "Shit2"
-      cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
-      grep -w "	Total test passed: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
-      echo "Shit3"
-      cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
-      grep -w "	Total test failed: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt      echo "Shit"
-      echo "Shit5"
+      grep "Total tests: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      grep "Total test passed: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      grep "Total test failed: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
       cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
     shell: bash
     env:
