@@ -47,8 +47,9 @@ runs:
       DELAY: ${{ inputs.delay }}
       COMMAND : ${{ inputs.command }}
       KEPLOY_PATH: ${{inputs.keploy-path}}
-  - run: |
+  - id: file
+    run: |
       echo "::set-output name=output_file_name::${GITHUB_WORKSPACE}/${WORKDIR}/report.txt"
       echo "output_file_name=${{ inputs.output_file_name }}"
-      cat ${{output_file_name}}
+      cat ${{output_file_name}} >> $GITHUB_OUTPUT
     shell: bash
