@@ -1,0 +1,12 @@
+      #cat ${GITHUB_WORKSPACE}/${WORKDIR}/testSets.yml      
+      #iterations=$(find . -type f -iname "report-*.yaml" | wc -l)
+      # echo "$iterations"
+      # for ((i=1 ; i<=$iterations; ++i))
+      # do
+      #   echo "Processing ${i} report.yaml file..."
+      #   cat "${GITHUB_WORKSPACE}/${WORKDIR}/keploy/testReports/report-${i}.yaml" >> $GITHUB_OUTPUT
+      # done
+
+      cd ${GITHUB_WORKSPACE}/${WORKDIR}/keploy
+      echo "$(find . -type d -name 'test-set-*' | wc -l)" > ${GITHUB_WORKSPACE}/${WORKDIR}/testSets.yml
+      
