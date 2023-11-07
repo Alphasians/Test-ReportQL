@@ -43,7 +43,7 @@ runs:
     name: Run Script
     run:  |
       ${GITHUB_ACTION_PATH}/install.sh
-      cat ${GITHUB_ACTION_PATH}/install.sh >> ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
+      ${GITHUB_ACTION_PATH}/install.sh >> ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
       cat ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
       grep -w "TESTRUN SUMMARY. For testrun with id: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt > ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
       grep -w "	Total tests: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
