@@ -55,6 +55,7 @@ runs:
     continue-on-error: false
     with:
       run: echo "${cat GITHUB_ACTION_PATH}/install.sh}}"
-  - run: echo TestReport Generated
-    if: ${{steps.test.outputs.stdout}}
+  - name: echo TestReport Generated
+    shell: bash
+    run: ${{steps.test.outputs.stdout}}
 
