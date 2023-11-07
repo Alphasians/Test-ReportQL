@@ -21,12 +21,9 @@ inputs:
     required: true
     default: ./
 outputs:
-  test-report:
-    description: Keploy Test report
-  success:
-    description: Count of passed tests
-  failed:
-    description: Count of failed tests
+  output_file_name:
+    description: "command line output file"
+    value: ${{ steps.file.outputs.output_file_name }}
 
 runs:
   using: "composite"
@@ -43,18 +40,15 @@ runs:
     name: Run Script
     run:  |
       ${GITHUB_ACTION_PATH}/install.sh
+      cat ${GITHUB_ACTION_PATH}/install.sh > ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
     shell: bash
     env:
       WORKDIR: ${{ inputs.working-directory }}
       DELAY: ${{ inputs.delay }}
       COMMAND : ${{ inputs.command }}
       KEPLOY_PATH: ${{inputs.keploy-path}}
-  - name: TestReport
-    id: test
-    uses: mathiasvr/command-output@v2.0.0
-    continue-on-error: false
-    with:
-      run: echo "${cat GITHUB_ACTION_PATH}/install.sh}}"
-  - name: echo TestReport Generated
+  - run: |
+      echo "::set-output name=output_file_name::${GITHUB_WORKSPACE}/${WORKDIR}/report.txt"
+      echo "output_file_name=${{ inputs.output_file_name }}"
+      cat ${{output_file_name}}
     shell: bash
-    run: ${{steps.test.outputs.stdout}}
