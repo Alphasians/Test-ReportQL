@@ -51,7 +51,6 @@ runs:
       COMMAND : ${{ inputs.command }}
       KEPLOY_PATH: ${{inputs.keploy-path}}
   - name: TestReport
-    id: test
     with:
       run: |
         cat ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
@@ -60,3 +59,4 @@ runs:
         grep -w "	Total test passed: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
         grep -w "	Total test failed: "${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
         cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      shell: bash
