@@ -51,7 +51,7 @@ runs:
       KEPLOY_PATH: ${{inputs.keploy-path}}
   - name: TestReport
     id: test
-    uses: masthiasvr/command-output@v2.0.0
+    uses: mathiasvr/command-output@v2.0.0
     continue-on-error: false
     with:
       run: echo "${cat GITHUB_ACTION_PATH}/install.sh}}"
