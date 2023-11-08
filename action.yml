@@ -61,9 +61,7 @@ runs:
       COMMAND : ${{ inputs.command }}
       KEPLOY_PATH: ${{inputs.keploy-path}}
   - name: Comment on PR
-    with:
-      script: |
-        cat ${{ steps.keploytestreport.outputs.KEPLOY_REPORT }}
+    run: cat ${{ steps.keploytestreport.outputs.KEPLOY_REPORT }}
       # script: |
       #   github.rest.issues.createComment({
       #     issue_number: context.issue.number,
