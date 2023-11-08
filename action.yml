@@ -64,7 +64,6 @@ runs:
     env: 
       github-token: ${{ inputs.secret_input }}
     with:
-      github-token: ${{ env.github-token }}
       script: |
         github.rest.issues.createComment({
           issue_number: context.issue.number,
