@@ -61,7 +61,18 @@ runs:
       COMMAND : ${{ inputs.command }}
       KEPLOY_PATH: ${{inputs.keploy-path}}
   - name: Comment on PR
-    run: ${{ steps.keploytestreport.outputs.KEPLOY_REPORT, '\n'}}
+    uses: actions/github-script@v6
+    env:
+      KEPLOY_REPORT: steps.keploytestreport.outputs.KEPLOY_REPORT
+    with:
+      github-token: ${{ github.token }}
+      script: |
+        github.rest.issues.createComment({
+          issue_number: context.issue.number,
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          body: process.env.KEPLOY_REPORT
+        })`
       # script: |
       #   github.rest.issues.createComment({
       #     issue_number: context.issue.number,
@@ -69,4 +80,4 @@ runs:
       #     repo: context.repo.repo,
       #     body: '${{ steps.keploytestreport.outputs.KEPLOY_REPORT }}'
       #   })`
-    shell: bash
+      # shell: bash
