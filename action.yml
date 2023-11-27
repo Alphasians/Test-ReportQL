@@ -48,11 +48,11 @@ runs:
     run:  |
       ${GITHUB_ACTION_PATH}/install.sh > ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
       grep "TESTRUN SUMMARY. For testrun with id: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt > ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
-      grep "Total tests: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
-      grep "Total test passed: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
-      grep "Total test failed: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt
+      grep "Total tests: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.out
+      grep "Total test passed: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.out
+      grep "Total test failed: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.out
       echo 'KEPLOY_REPORT<<EOF' > $GITHUB_OUTPUT
-      cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.txt >> $GITHUB_OUTPUT
+      cat ${GITHUB_WORKSPACE}/${WORKDIR}/final.out >> $GITHUB_OUTPUT
       echo 'EOF' >> $GITHUB_OUTPUT
       cat $GITHUB_OUTPUT
     shell: bash
@@ -74,11 +74,3 @@ runs:
           repo: context.repo.repo,
           body: process.env.KEPLOY_REPORT
         })
-      # script: |
-      #   github.rest.issues.createComment({
-      #     issue_number: context.issue.number,
-      #     owner: context.repo.owner,
-      #     repo: context.repo.repo,
-      #     body: '${{ steps.keploytestreport.outputs.KEPLOY_REPORT }}'
-      #   })`
-      # shell: bash
