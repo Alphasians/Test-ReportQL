@@ -72,7 +72,7 @@ runs:
           owner: context.repo.owner,
           repo: context.repo.repo,
           body: process.env.KEPLOY_REPORT
-        })`
+        })
       # script: |
       #   github.rest.issues.createComment({
       #     issue_number: context.issue.number,
