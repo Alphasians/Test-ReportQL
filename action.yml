@@ -24,13 +24,6 @@ inputs:
      description: "GitHub Token"
      required: false
      default: ${{ github.token }}
-outputs:
-  test-report:
-    description: Keploy Test report
-  success:
-    description: Count of passed tests
-  failed:
-    description: Count of failed tests
 
 runs:
   using: "composite"
@@ -46,7 +39,7 @@ runs:
   - id: keploytestreport
     name: Run Script
     run:  |
-      ${GITHUB_ACTION_PATH}/install.sh > ${GITHUB_WORKSPACE}/${WORKDIR}/report.out
+      ${GITHUB_ACTION_PATH}/install.sh > ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt
       grep "TESTRUN SUMMARY. For testrun with id: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.out > ${GITHUB_WORKSPACE}/${WORKDIR}/final.out
       grep "Total tests: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.out
       grep "Total test passed: " ${GITHUB_WORKSPACE}/${WORKDIR}/report.txt >> ${GITHUB_WORKSPACE}/${WORKDIR}/final.out
