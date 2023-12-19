@@ -9,10 +9,6 @@ inputs:
   working-directory:
     description: Relative path under $GITHUB_WORKSPACE where the repository was checked out
     required: true
-  delay:
-    description: Delay between each test cases
-    required: false
-    default: 20
   command:
     description: Command to run the application
     required: true
@@ -20,10 +16,6 @@ inputs:
     description: Path to keploy
     required: true
     default: ./
-  secret_input: 
-     description: "GitHub Token"
-     required: false
-     default: ${{ github.token }}
 
 runs:
   using: "composite"
@@ -65,5 +57,5 @@ runs:
           issue_number: context.issue.number,
           owner: context.repo.owner,
           repo: context.repo.repo,
-          body: process.env.KEPLOY_REPORT
+          body: `process.env.KEPLOY_REPORT`
         })
